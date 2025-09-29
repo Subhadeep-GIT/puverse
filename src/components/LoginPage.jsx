@@ -2,7 +2,7 @@ import { useState } from "react";
 import { login } from "../api/auth";
 import "../styles/login.css";
 
-export default function LoginPage({ switchToSignup, onLoginSuccess }) {
+export default function LoginPage({ switchToSignup, onLogin }) {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ export default function LoginPage({ switchToSignup, onLoginSuccess }) {
       const res = await login(form);
       if (res.success) {
         setMessage("✅ Logged in successfully!");
-        onLoginSuccess(res); // Notify parent that login succeeded
+        onLogin(res); // Notify parent that login succeeded
       } else {
         setMessage(`❌ ${res.message}`);
       }
