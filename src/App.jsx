@@ -25,7 +25,7 @@ export default function App() {
         {user ? (
           <HomePage user={user} onLogout={handleLogout} />
         ) : (
-          <AuthPage onLoginSuccess={setUser} />
+          <AuthPage onLogin={setUser} />
         )}
       </div>
     </div>
