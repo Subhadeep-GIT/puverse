@@ -30,7 +30,10 @@ export default function AuthPage({ onLogin }) {
         {/* Active Form */}
         <div className="auth-form-container">
           {activeTab === "login" ? (
-            <LoginPage switchToSignup={() => setActiveTab("signup")} onLogin={onLogin} />
+            <LoginPage 
+              switchToSignup={() => setActiveTab("signup")} 
+              onLogin={onLogin}   // propagate login to App.jsx for SPA
+            />
           ) : (
             <SignupForm 
               switchToLogin={() => setActiveTab("login")} 
