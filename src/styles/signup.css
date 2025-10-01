@@ -40,6 +40,8 @@
   transition: background-color 0.2s;
 }
 
+
+
 .signup-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
