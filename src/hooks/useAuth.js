@@ -1,5 +1,6 @@
+// src/hooks/useAuth.js
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getCurrentUser } from "../api/auth"; // import the new helper
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -8,14 +9,15 @@ export const useAuth = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api"}/auth/me`, { withCredentials: true });
-        if (res.data.success) setUser(res.data.user);
+        const res = await getCurrentUser(); // use helper
+        if (res.success) setUser(res.user);
       } catch (err) {
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
+
     fetchUser();
   }, []);
 

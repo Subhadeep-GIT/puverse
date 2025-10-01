@@ -30,3 +30,19 @@ export const login = async ({ email, password }) =>
 
 // Logout
 export const logout = async () => postRequest("/auth/logout", {});
+
+// Get current session (works with ngrok free-tier)
+export const getCurrentUser = async () => {
+  try {
+    const res = await axios.get(`${BASE_URL}/auth/me`, {
+      withCredentials: true,
+      headers: {
+        "ngrok-skip-browser-warning": "true", // bypass ngrok browser warning
+      },
+    });
+    return res.data;
+  } catch (err) {
+    console.error("API request error:", err);
+    return { success: false, user: null };
+  }
+};
