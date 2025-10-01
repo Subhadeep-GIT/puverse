@@ -1,38 +1,56 @@
 // src/App.jsx
+import { useState, useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 import { logout } from "./api/auth";
+import axios from "axios";
 
 export default function App() {
   const { user, setUser, loading } = useAuth();
+  const [backendAlive, setBackendAlive] = useState(false);
 
-  // Logout handler: destroys session on backend and resets state
+  // Logout handler
   const handleLogout = async () => {
     try {
       await logout();
-      setUser(null); // redirect to AuthPage
+      setUser(null);
     } catch (err) {
       console.error("Logout failed:", err);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Loading...</p>
-      </div>
-    );
-  }
+  // Check backend health
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api"}/health`,
+          { headers: { "ngrok-skip-browser-warning": "true" } }
+        );
+        if (res.data.status === "ok") setBackendAlive(true);
+      } catch (err) {
+        setBackendAlive(false);
+      }
+    };
+    checkBackend();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      <div className="w-full max-w-md flex-1 flex flex-col justify-center">
         {user ? (
           <HomePage user={user} onLogout={handleLogout} />
         ) : (
           <AuthPage onLogin={setUser} />
         )}
+      </div>
+
+      {/* Green flag for backend status */}
+      <div className={`p-2 mt-4 rounded text-white ${backendAlive ? "bg-green-500" : "bg-red-500"}`}>
+        {backendAlive ? "Backend reachable ✅" : "Backend unreachable ❌"}
       </div>
     </div>
   );
