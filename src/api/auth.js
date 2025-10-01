@@ -8,11 +8,31 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api
 // Helper function for POST requests
 const postRequest = async (url, data) => {
   try {
-    const res = await axios.post(`${BASE_URL}${url}`, data, { withCredentials: true });
+    const res = await axios.post(`${BASE_URL}${url}`, data, {
+      withCredentials: true,
+      headers: { "ngrok-skip-browser-warning": "true" }, // bypass ngrok warning
+    });
     return res.data;
   } catch (err) {
     console.error("API request error:", err);
-    return { success: false, message: err.response?.data?.message || err.message || "Request failed" };
+    return {
+      success: false,
+      message: err.response?.data?.message || err.message || "Request failed",
+    };
+  }
+};
+
+// Helper function for GET requests
+const getRequest = async (url) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${url}`, {
+      withCredentials: true,
+      headers: { "ngrok-skip-browser-warning": "true" },
+    });
+    return res.data;
+  } catch (err) {
+    console.error("API request error:", err);
+    return { success: false, user: null };
   }
 };
 
@@ -31,18 +51,5 @@ export const login = async ({ email, password }) =>
 // Logout
 export const logout = async () => postRequest("/auth/logout", {});
 
-// Get current session (works with ngrok free-tier)
-export const getCurrentUser = async () => {
-  try {
-    const res = await axios.get(`${BASE_URL}/auth/me`, {
-      withCredentials: true,
-      headers: {
-        "ngrok-skip-browser-warning": "true", // bypass ngrok browser warning
-      },
-    });
-    return res.data;
-  } catch (err) {
-    console.error("API request error:", err);
-    return { success: false, user: null };
-  }
-};
+// Get current session / logged-in user
+export const getCurrentUser = async () => getRequest("/auth/me");
