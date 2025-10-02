@@ -9,8 +9,8 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api
 const postRequest = async (url, data) => {
   try {
     const res = await axios.post(`${BASE_URL}${url}`, data, {
-      headers: { "ngrok-skip-browser-warning": "true" }, // keep for ngrok testing if needed
-      // removed withCredentials for quick tunnel testing
+      headers: { "ngrok-skip-browser-warning": "true" },
+      withCredentials: true, // ✅ keep session cookies
     });
     return res.data;
   } catch (err) {
@@ -27,7 +27,7 @@ const getRequest = async (url) => {
   try {
     const res = await axios.get(`${BASE_URL}${url}`, {
       headers: { "ngrok-skip-browser-warning": "true" },
-      // removed withCredentials for quick tunnel testing
+      withCredentials: true, // ✅ keep session cookies
     });
     return res.data;
   } catch (err) {
