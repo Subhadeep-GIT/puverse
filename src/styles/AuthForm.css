@@ -2,17 +2,16 @@
    Container
    ============================== */
 .auth-container {
-  background: #fff;
+  background: linear-gradient(135deg, #f0f4ff, #d9e6ff); /* soft modern gradient */
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); /* slightly deeper shadow for depth */
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
   font-family: 'Inter', sans-serif;
 }
-
 /* ==============================
    Toggle Buttons
    ============================== */
@@ -98,7 +97,7 @@
   cursor: pointer;
   border: none;
   color: #4f46e5;
-  transition: background-color 0.2s;
+  transition: background-color 0.5s;
 }
 
 .auth-btn:disabled {
