@@ -1,0 +1,51 @@
+/* HamburgerMenu.css */
+
+/* Full-screen right side menu */
+.full-right-menu {
+  position: fixed;
+  top: 60px;       /* below header */
+  right: 0;
+  height: 250px;   /* smaller height */
+  width: 240px;    /* slightly narrower */
+  background: linear-gradient(180deg, #1a1a1a, #111);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* push username/email to bottom */
+  padding: 20px;
+  z-index: 9999;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.3);
+  border-radius: 12px 0 0 12px; /* rounded left edges */
+  transition: transform 0.3s ease;
+}
+
+/* Menu bottom content */
+.menu-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-username {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.menu-email {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.signout-btn {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.signout-btn:hover {
+  background: #c0392b;
+}

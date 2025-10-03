@@ -1,0 +1,85 @@
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  
+  border-bottom: none;
+  padding: 8px 0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 500;
+
+  /* ↓ ↓ ↓ Compact width ↓ ↓ ↓ */
+  max-width: 400px;
+  margin: 0.5rem auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===========================
+   Individual Tab Buttons
+=========================== */
+.tabs button {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #555;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Active Tab */
+.tabs button.active {
+  color: none;
+  background: linear-gradient(135deg, #e0f2ff, #cfeafe);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Hover effect */
+.tabs button:hover {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2ff);
+  color: #1d4ed8;
+}
+
+/* Icon bounce (optional) */
+.tabs button .fa-upload {
+  display: inline-block;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Tablet / Desktop scaling */
+@media (min-width: 640px) {
+  .tabs {
+    max-width: 500px;
+  }
+
+  .tabs button {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tabs {
+    max-width: 600px;
+  }
+}

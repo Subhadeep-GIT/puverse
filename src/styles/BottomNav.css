@@ -1,0 +1,78 @@
+/* ===========================
+   Bottom Navigation - Modern Glass iOS Style
+=========================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px); /* small margin from edges */
+  max-width: 480px;
+  height: 64px;
+
+  /* Glass effect */
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  /* Rounded top corners and subtle shadow */
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.08), 
+              0 -2px 8px rgba(255, 255, 255, 0.1) inset;
+
+  z-index: 1000;
+  font-family: 'Inter', 'SF Pro Display', sans-serif;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* Icons */
+.bottom-nav button i {
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Active Button */
+.bottom-nav button.active {
+  color: #6366f1;
+  transform: translateY(-4px) scale(1.15);
+  animation: activeBounce 1.2s infinite;
+}
+
+.bottom-nav button.active i {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hover Effect */
+.bottom-nav button:hover {
+  color: #4f46e5;
+  transform: translateY(-2px) scale(1.1);
+}
+
+/* Active icon subtle bounce */
+@keyframes activeBounce {
+  0%, 100% { transform: translateY(-4px) scale(1.15); }
+  50% { transform: translateY(-6px) scale(1.18); }
+}

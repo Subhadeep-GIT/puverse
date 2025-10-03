@@ -1,0 +1,98 @@
+/* src/styles/NotificationToast.css */
+
+.notification-toast {
+  position: fixed;
+  bottom: 80px; /* above bottom nav */
+  right: 20px;
+  background: rgba(59, 130, 246, 0.9); /* semi-transparent modern blue */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transform: translate(50px, 50px) scale(0.9);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  max-width: 340px;
+  z-index: 2000;
+  font-family: 'Inter', 'Segoe UI', 'SF Pro Display', sans-serif;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* Show animation */
+.notification-toast.show {
+  animation: slideBounce 0.5s forwards;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Message styling */
+.notification-toast .message {
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #f0f9ff;
+  font-weight: 600;
+}
+
+/* Close button */
+.notification-toast .close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.notification-toast .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Animation keyframes */
+@keyframes slideBounce {
+  0% {
+    transform: translate(50px, 50px) scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-10px, -10px) scale(1.05);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(5px, 5px) scale(0.98);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.notification-toast.hide {
+  animation: slideFadeOut 0.4s forwards;
+}
+
+@keyframes slideFadeOut {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(50px, 50px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Optional: subtle glow for modern effect */
+.notification-toast.show {
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6), 0 12px 40px rgba(0, 0, 0, 0.15);
+}

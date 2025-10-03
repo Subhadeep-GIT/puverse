@@ -1,10 +1,10 @@
 import React from "react";
 
 const tabs = [
-  { key: "feed", label: "🏠 Feed" },
-  { key: "profile", label: "👤 Profile" },
-  { key: "chat", label: "💬 Chat" },
-  { key: "notifications", label: "🔔 Notifications" },
+  { key: "feed", label: "Feed", icon: "fa-solid fa-house" },
+  { key: "profile", label: "Profile", icon: "fa-solid fa-user" },
+  { key: "chat", label: "Chat", icon: "fa-solid fa-comment" },
+  { key: "notifications", label: "Notifications", icon: "fa-solid fa-bell" },
 ];
 
 export default function BottomNav({ activeTab, setActiveTab }) {
@@ -16,7 +16,8 @@ export default function BottomNav({ activeTab, setActiveTab }) {
           className={activeTab === tab.key ? "active" : ""}
           onClick={() => setActiveTab(tab.key)}
         >
-          {tab.label}
+          <i className={tab.icon}></i>
+          <span>{tab.label}</span>
         </button>
       ))}
     </nav>

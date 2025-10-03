@@ -1,0 +1,92 @@
+/* src/styles/Header.css */
+
+/* Main header container */
+.homepage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+
+  /* iOS-style glass effect */
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 1.25rem;
+
+  /* Soft shadows for depth */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+              0 2px 6px rgba(255, 255, 255, 0.1) inset;
+
+  /* Smooth transition for hover or theme changes */
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+
+  font-family: 'SF Pro Display', 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Optional lift on hover */
+.homepage-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12),
+              0 4px 12px rgba(255, 255, 255, 0.12) inset;
+}
+
+/* Branding */
+.header-greeting {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: #111827;
+
+  /* Gradient text for modern look */
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Right-side actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Notification bell button */
+.notifications-btn {
+  position: relative;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 6px 10px;
+  border: none;
+  color: #1f2937;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.notifications-btn:hover {
+  background: rgba(255,255,255,0.35);
+  transform: scale(1.05);
+}
+
+/* Notification red dot */
+.notification-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+}
+
+/* Hamburger wrapper adjustments */
+.hamburger-wrapper {
+  display: flex;
+  align-items: center;
+}
+

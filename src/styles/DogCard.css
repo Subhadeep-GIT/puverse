@@ -1,0 +1,88 @@
+/* src/styles/DogCard.css */
+
+.post-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin: 1rem auto; /* remove bottom margin, handle via container */
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post-header h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  color: #111827;
+}
+
+/* Body */
+.post-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-body img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.post-body img:hover {
+  transform: scale(1.02);
+}
+
+.post-body p {
+  font-size: 0.95rem;
+  color: #374151;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Mobile-first adjustments */
+@media (min-width: 640px) {
+  .post-card {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 768px) {
+  .post-card {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .post-card {
+    max-width: 700px;
+  }
+}
+
+/* Page wrapper to avoid bottom nav overlap */
+.page-content {
+  padding-bottom: 80px; /* height of BottomNav */
+}

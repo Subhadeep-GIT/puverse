@@ -1,5 +1,8 @@
 // src/components/Tabs.jsx
 import React from "react";
+import "../styles/Tabs.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse, faUpload } from "@fortawesome/free-solid-svg-icons";
 
 export default function Tabs({ activeTab, setActiveTab }) {
   return (
@@ -8,13 +11,13 @@ export default function Tabs({ activeTab, setActiveTab }) {
         className={activeTab === "feed" ? "active" : ""}
         onClick={() => setActiveTab("feed")}
       >
-        Feed
+        <FontAwesomeIcon icon={faHouse} /> Feed
       </button>
       <button
         className={activeTab === "post" ? "active" : ""}
         onClick={() => setActiveTab("post")}
       >
-        Post
+        <FontAwesomeIcon icon={faUpload} /> Post
       </button>
     </div>
   );

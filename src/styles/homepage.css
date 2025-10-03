@@ -1,139 +1,201 @@
-/* Base */
+/* Base Styles */
 .homepage {
   min-height: 100vh;
-  font-family: system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   display: flex;
   flex-direction: column;
-  background: #f0f2f5;
-  padding-bottom: 60px; /* for bottom nav */
+  background: linear-gradient(160deg, #f0f2f5 0%, #e0f7fa 100%);
+  padding-bottom: 80px; /* space for bottom nav */
 }
 
+/* Header */
 .homepage-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
-  background: #fff;
+  padding: 12px 16px;
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .hamburger {
-  font-size: 1.5em;
+  font-size: 1.6em;
   background: none;
   border: none;
   cursor: pointer;
+  color: #374151;
 }
 
 .logout-btn {
   background: #ef4444;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* Tabs */
 .tabs {
   display: flex;
-  background: #fff;
+  background: linear-gradient(90deg, #ffffffcc, #f0f2f5cc);
   border-bottom: 1px solid #ddd;
+  backdrop-filter: blur(8px);
 }
 
 .tabs button {
   flex: 1;
-  padding: 10px 0;
+  padding: 12px 0;
   cursor: pointer;
   border: none;
   background: none;
   font-weight: 600;
   color: #555;
+  transition: all 0.2s;
 }
 
 .tabs button.active {
-  border-bottom: 2px solid #3b82f6;
-  color: #000;
+  border-bottom: 3px solid #3b82f6;
+  color: #111827;
 }
 
+/* Main Feed */
 .homepage-feed {
-  padding: 10px 15px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
   flex: 1;
 }
 
+/* Cards */
 .post-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px 15px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  background: linear-gradient(145deg, #ffffff, #f9fafb);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .post-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .post-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .post-header h3 {
   margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #111827;
 }
 
 .post-body {
   line-height: 1.5;
   color: #555;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .post-image {
   width: 100%;
   max-width: 420px;
-  height: 420px;
+  height: auto;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 16px;
   margin: 0 auto;
   display: block;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
 }
 
+.post-image:hover {
+  transform: scale(1.02);
+}
+
+/* Dog Card specific */
 .dog-card {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Bottom Nav */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #fff;
+  background: linear-gradient(90deg, #ffffffcc, #f0f2f5cc);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: space-around;
+  align-items: center;
   border-top: 1px solid #ddd;
-  padding: 8px 0;
+  padding: 10px 0;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+  z-index: 1000;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .bottom-nav button {
   background: none;
   border: none;
-  font-size: 1em;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
 }
 
 .bottom-nav button.active {
   color: #3b82f6;
+  font-weight: 700;
 }
 
-/* Responsive */
+.bottom-nav button:hover {
+  color: #1d4ed8;
+}
+
+/* Mobile First Responsive */
 @media (max-width: 768px) {
   .post-image {
-    height: auto;
     max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 640px) {
+  .homepage {
+    padding-bottom: 90px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .post-card {
+    max-width: 700px;
+    margin: 0 auto 20px auto;
   }
 }
