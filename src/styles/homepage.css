@@ -1,0 +1,139 @@
+/* Base */
+.homepage {
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  background: #f0f2f5;
+  padding-bottom: 60px; /* for bottom nav */
+}
+
+.homepage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.hamburger {
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px 0;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-weight: 600;
+  color: #555;
+}
+
+.tabs button.active {
+  border-bottom: 2px solid #3b82f6;
+  color: #000;
+}
+
+.homepage-feed {
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+}
+
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.post-header h3 {
+  margin: 0;
+}
+
+.post-body {
+  line-height: 1.5;
+  color: #555;
+}
+
+.post-image {
+  width: 100%;
+  max-width: 420px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 auto;
+  display: block;
+}
+
+.dog-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ddd;
+  padding: 8px 0;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.bottom-nav button.active {
+  color: #3b82f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .post-image {
+    height: auto;
+    max-width: 100%;
+  }
+}
