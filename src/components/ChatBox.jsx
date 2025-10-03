@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ChatList from "./ChatList"; // 👈 Import
 
 export default function ChatBox({ user }) {
-  const [users, setUsers] = useState([]);
   const [chatWith, setChatWith] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-
-  // Fetch all users to select from
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("http://localhost:5001/api/users", {
-          withCredentials: true,
-        });
-        if (res.data.success) setUsers(res.data.users.filter(u => u.user_id !== user.user_id));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchUsers();
-  }, []);
 
   // Fetch messages between current user and selected user
   const fetchMessages = async () => {
@@ -63,15 +48,8 @@ export default function ChatBox({ user }) {
     <div className="chat-container">
       <div className="chat-users">
         <h4>Select a user:</h4>
-        {users.map(u => (
-          <button
-            key={u.user_id}
-            onClick={() => setChatWith(u)}
-            className={chatWith?.user_id === u.user_id ? "active" : ""}
-          >
-            {u.username}
-          </button>
-        ))}
+        {/* 👇 Use ChatList to render user list */}
+        <ChatList user={user} onSelect={setChatWith} />
       </div>
 
       <div className="chat-box">

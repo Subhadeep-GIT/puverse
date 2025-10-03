@@ -5,24 +5,30 @@ import axios from "axios";
 export default function ChatList({ user, onSelect }) {
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get("http://localhost:5001/api/users", {
-          withCredentials: true,
-        });
-        if (res.data.success) {
-          // Exclude the logged-in user
-          const others = res.data.users.filter(u => u.user_id !== user.user_id);
-          setUsers(others);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 
-    fetchUsers();
-  }, [user]);
+useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("http://localhost:5001/api/users", {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        const others = res.data.users.filter(u => u.user_id !== user.user_id);
+        setUsers(others);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch users");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUsers();
+}, [user]);
 
   return (
     <div className="chat-list">

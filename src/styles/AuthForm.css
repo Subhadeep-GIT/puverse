@@ -1,4 +1,6 @@
-/* Container */
+/* ==============================
+   Container
+   ============================== */
 .auth-container {
   background: #fff;
   padding: 2rem;
@@ -11,7 +13,9 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Top toggle buttons */
+/* ==============================
+   Toggle Buttons
+   ============================== */
 .auth-toggle {
   display: flex;
   justify-content: center;
@@ -31,16 +35,18 @@
 
 .toggle-btn.active {
   background: #6366f1;
-  color: white;
+  color: #fff;
   border-color: #6366f1;
 }
 
 .toggle-btn:hover {
   background: #4f46e5;
-  color: white;
+  color: #fff;
 }
 
-/* Form */
+/* ==============================
+   Form
+   ============================== */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -81,16 +87,18 @@
   cursor: pointer;
 }
 
-/* Buttons */
+/* ==============================
+   Buttons
+   ============================== */
 .auth-btn {
   padding: 0.75rem;
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
   border: none;
-  color: #fff;
+  color: #4f46e5;
+  transition: background-color 0.2s;
 }
 
 .auth-btn:disabled {
@@ -98,9 +106,9 @@
   cursor: not-allowed;
 }
 
-/* Login / Signup / Verify colors */
+/* Specific button types */
 .auth-btn.login {
-  background-color: #6366f1;
+  background-color: #0e1093;
 }
 
 .auth-btn.login:hover {
@@ -123,7 +131,9 @@
   background-color: #d97706;
 }
 
-/* OTP Info */
+/* ==============================
+   OTP / Signup Info
+   ============================== */
 .signup-info {
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
@@ -141,7 +151,9 @@
   color: #ef4444;
 }
 
-/* Messages */
+/* ==============================
+   Messages
+   ============================== */
 .auth-message {
   margin-top: 1rem;
   font-size: 0.875rem;
