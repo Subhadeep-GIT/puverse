@@ -1,11 +1,13 @@
 // src/components/ProfileTab.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/ProfileTab.css"; // dedicated CSS
 
 export default function ProfileTab({ user }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingPostId, setDeletingPostId] = useState(null);
+  const [profileImage, setProfileImage] = useState(user?.profile_pic || null);
 
   const fetchUserPosts = () => {
     if (!user?.id) return;
@@ -32,7 +34,6 @@ export default function ProfileTab({ user }) {
         withCredentials: true,
       });
       if (res.data.success) {
-        // Use post_id here
         setPosts(posts.filter((p) => p.post_id !== postId));
       } else {
         alert(res.data.message || "Failed to delete post");
@@ -45,11 +46,52 @@ export default function ProfileTab({ user }) {
     }
   };
 
+  const handleProfilePicChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profile_pic", file);
+
+    try {
+      const res = await axios.post(
+        `http://localhost:5001/api/user/${user.id}/profile-pic`,
+        formData,
+        { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }
+      );
+      if (res.data.success) {
+        setProfileImage(res.data.profile_pic);
+      }
+    } catch (err) {
+      console.error("Failed to update profile picture:", err);
+      alert("Failed to update profile picture");
+    }
+  };
+
+  const getInitials = (name) => {
+    if (!name) return "?";
+    return name.charAt(0).toUpperCase();
+  };
+
   return (
     <div className="profile-tab">
-      <h3>Your Profile</h3>
-      <p>Username: {user?.username || "Not available"}</p>
-      <p>Email: {user?.email || "Not available"}</p>
+      <div className="profile-header">
+        <div className="profile-pic-wrapper">
+          {profileImage ? (
+            <img src={`http://localhost:5001${profileImage}`} alt="Profile" className="profile-pic" />
+          ) : (
+            <div className="profile-pic placeholder">{getInitials(user?.username)}</div>
+          )}
+          <label className="edit-pic">
+            <input type="file" accept="image/*" onChange={handleProfilePicChange} />
+            <span className="pencil-icon">✏️</span>
+          </label>
+        </div>
+        <div className="profile-info">
+          <h3>{user?.username || "Username"}</h3>
+          <p>{user?.email || "Email not available"}</p>
+        </div>
+      </div>
 
       <h4>Your Posts</h4>
       {loading ? (
