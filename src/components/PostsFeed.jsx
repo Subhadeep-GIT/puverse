@@ -11,17 +11,14 @@ export default function PostsFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Fetch all posts
+  // ---------- Fetch all posts ----------
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/posts`, {
-          withCredentials: true,
-        });
-        if (res.data.success) {
-          setPosts(res.data.posts);
-          // Preload comments for each post
-          res.data.posts.forEach((post) => fetchComments(post.post_id));
+        const { data } = await axios.get(`${BASE_URL}/posts`, { withCredentials: true });
+        if (data.success) {
+          setPosts(data.posts);
+          data.posts.forEach((post) => fetchComments(post.post_id));
         } else {
           setError("Failed to load posts");
         }
@@ -36,31 +33,29 @@ export default function PostsFeed() {
     fetchPosts();
   }, []);
 
-  // Fetch comments for a post
+  // ---------- Fetch comments for a post ----------
   const fetchComments = async (postId) => {
     try {
-      const res = await axios.get(`${BASE_URL}/comments/${postId}`, {
-        withCredentials: true,
-      });
-      if (res.data.success) {
-        setComments((prev) => ({ ...prev, [postId]: res.data.comments }));
+      const { data } = await axios.get(`${BASE_URL}/comments/${postId}`, { withCredentials: true });
+      if (data.success) {
+        setComments((prev) => ({ ...prev, [postId]: data.comments }));
       }
     } catch (err) {
       console.error(`Error fetching comments for post ${postId}:`, err);
     }
   };
 
-  // Handle new comment submission (optimistic)
+  // ---------- Submit a new comment ----------
   const handleCommentSubmit = async (postId, e) => {
     e.preventDefault();
     const text = newComment[postId]?.trim();
     if (!text) return;
 
-    // Optimistically update UI
+    // Optimistic UI update
     const tempComment = {
-      comment_id: `temp-${Date.now()}`, // temporary ID
+      comment_id: `temp-${Date.now()}`,
       comment_text: text,
-      User: { username: "You" }, // show as current user immediately
+      User: { username: "You" },
     };
     setComments((prev) => ({
       ...prev,
@@ -69,34 +64,35 @@ export default function PostsFeed() {
     setNewComment((prev) => ({ ...prev, [postId]: "" }));
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}/comments`,
-        { post_id: postId, comment_text: text },
-        { withCredentials: true }
-      );
+      const { data } = await axios({
+        method: "POST",
+        url: `${BASE_URL}/comments`,
+        data: { post_id: postId, comment_text: text },
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
 
-      if (res.data.success) {
-        // Replace temp comment with actual comment from backend
+      if (data.success) {
         setComments((prev) => ({
           ...prev,
-          [postId]: [res.data.comment, ...prev[postId].filter(c => c.comment_id !== tempComment.comment_id)],
+          [postId]: [data.comment, ...prev[postId].filter(c => c.comment_id !== tempComment.comment_id)],
         }));
       } else {
-        // Remove temp comment if backend fails
-        setComments((prev) => ({
-          ...prev,
-          [postId]: prev[postId].filter(c => c.comment_id !== tempComment.comment_id),
-        }));
-        console.error("Failed to add comment:", res.data.message);
+        removeTempComment(postId, tempComment.comment_id);
+        console.error("Failed to add comment:", data.message);
       }
     } catch (err) {
-      // Remove temp comment on error
-      setComments((prev) => ({
-        ...prev,
-        [postId]: prev[postId].filter(c => c.comment_id !== tempComment.comment_id),
-      }));
+      removeTempComment(postId, tempComment.comment_id);
       console.error("Error adding comment:", err);
     }
+  };
+
+  // ---------- Remove temporary comment ----------
+  const removeTempComment = (postId, tempId) => {
+    setComments((prev) => ({
+      ...prev,
+      [postId]: prev[postId].filter(c => c.comment_id !== tempId),
+    }));
   };
 
   if (loading) return <p>Loading posts...</p>;
@@ -120,10 +116,7 @@ export default function PostsFeed() {
             {/* Post Image */}
             {post.image_path && (
               <div className="post-image">
-                <img
-                  src={`http://localhost:5001${post.image_path}`}
-                  alt="Post"
-                />
+                <img src={`http://localhost:5001${post.image_path}`} alt="Post" />
               </div>
             )}
 
@@ -136,26 +129,19 @@ export default function PostsFeed() {
               <div className="comments-list">
                 {(comments[post.post_id] || []).map((comment) => (
                   <div key={comment.comment_id} className="comment-item">
-                    <strong>{comment.User?.username || "User"}:</strong>{" "}
-                    <span>{comment.comment_text}</span>
+                    <strong>{comment.User?.username || "User"}:</strong> {comment.comment_text}
                   </div>
                 ))}
               </div>
 
               {/* Add New Comment */}
-              <form
-                className="comment-form"
-                onSubmit={(e) => handleCommentSubmit(post.post_id, e)}
-              >
+              <form className="comment-form" onSubmit={(e) => handleCommentSubmit(post.post_id, e)}>
                 <input
                   type="text"
                   placeholder="Add a comment..."
                   value={newComment[post.post_id] || ""}
                   onChange={(e) =>
-                    setNewComment((prev) => ({
-                      ...prev,
-                      [post.post_id]: e.target.value,
-                    }))
+                    setNewComment((prev) => ({ ...prev, [post.post_id]: e.target.value }))
                   }
                 />
                 <button type="submit">Post</button>
