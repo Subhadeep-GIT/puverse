@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Base URL from environment variable (Vite-friendly)
 // Fallback to localhost for local development
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
+const BASE_URL = import.meta.env.VITE_API_BACKEND_URL || "http://localhost:5001/api";
 
 // Helper function for POST requests
 const postRequest = async (url, data) => {
