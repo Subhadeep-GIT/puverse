@@ -1,7 +1,7 @@
 // src/components/SearchTab.jsx
 import React, { useState } from "react";
 import axios from "axios";
-import "../styles/searchtab.css";
+import "../styles/SearchTab.css";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
 
