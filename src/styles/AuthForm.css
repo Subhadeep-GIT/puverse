@@ -1,31 +1,29 @@
-/* ===== Page Layout ===== */
 .auth-page {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  position: relative;
+  background: #f0f2f5;
 }
 
-.bg-image {
-  position: absolute;
-  top: 0;
-  left: 0;
+.mobile-top-image {
   width: 100%;
-  height: 100%;
-  background: url("https://ums.paruluniversity.ac.in/Default/assets/pages/img/1.jpg")
-    center/cover no-repeat;
-  z-index: -1;
+  height: 200px;
+  background: url("https://ums.paruluniversity.ac.in/Default/assets/pages/img/1.jpg") center/cover no-repeat;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
-/* ===== Form Wrapper ===== */
 .form-wrapper {
-  background: rgba(255, 255, 255, 0.95);
+  background: #fff;
+  margin-top: -50px;
   padding: 2rem;
   border-radius: 1rem;
+  width: 90%;
   max-width: 400px;
-  width: 100%;
   text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .form-title {
@@ -33,7 +31,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* ===== Toggle Buttons ===== */
 .auth-toggle {
   display: flex;
   justify-content: center;
@@ -57,7 +54,6 @@
   border-color: #1877f2;
 }
 
-/* ===== Form Inputs ===== */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -69,25 +65,30 @@
   border-radius: 0.5rem;
   border: 1px solid #ccc;
   font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .password-wrapper {
   position: relative;
 }
 
-.show-pass-btn {
+.password-icon {
   position: absolute;
-  right: 1rem;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #1877f2;
   cursor: pointer;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
-/* ===== Buttons ===== */
+.eye-icon {
+  width: 20px;
+  height: 20px;
+  color: #555;
+}
+
 .auth-btn {
   padding: 0.75rem;
   border-radius: 0.5rem;
@@ -103,19 +104,12 @@
   cursor: not-allowed;
 }
 
-/* ===== Messages ===== */
 .auth-message {
   margin-top: 1rem;
   font-size: 0.9rem;
   color: #ef4444;
 }
 
-/* ===== OTP ===== */
-.otp-expired {
-  color: #ef4444;
-}
-
-/* ===== Secondary links ===== */
 .secondary-links {
   margin-top: 1rem;
   font-size: 0.85rem;
@@ -134,12 +128,10 @@
   color: #555;
 }
 
-/* ===== Responsive ===== */
+/* ===== Mobile ===== */
 @media (max-width: 768px) {
-  .bg-image {
-    display: none;
-  }
   .form-wrapper {
+    margin-top: -80px;
     padding: 1.5rem;
   }
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { login, signup, verifyOTP } from "../api/auth";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function AuthForm({ onLogin }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -31,9 +32,8 @@ export default function AuthForm({ onLogin }) {
     setMessage("");
     try {
       const res = await login({ email: form.email, password: form.password });
-      if (res.success) {
-        onLogin(res.user || res);
-      } else setMessage(`❌ ${res.message}`);
+      if (res.success) onLogin(res.user || res);
+      else setMessage(`❌ ${res.message}`);
     } catch {
       setMessage("❌ Something went wrong.");
     } finally {
@@ -80,7 +80,6 @@ export default function AuthForm({ onLogin }) {
 
   return (
     <div className="auth-form-container">
-      {/* Toggle */}
       <div className="auth-toggle">
         <button
           className={isLogin ? "active" : ""}
@@ -104,7 +103,6 @@ export default function AuthForm({ onLogin }) {
         </button>
       </div>
 
-      {/* Forms */}
       {isLogin ? (
         <form onSubmit={handleLogin} className="auth-form">
           <input
@@ -126,13 +124,12 @@ export default function AuthForm({ onLogin }) {
               required
               disabled={loading}
             />
-            <button
-              type="button"
-              className="show-pass-btn"
+            <span
+              className="password-icon"
               onClick={() => setShowPassword((p) => !p)}
             >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+              {showPassword ? <EyeSlashIcon className="eye-icon" /> : <EyeIcon className="eye-icon" />}
+            </span>
           </div>
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? "Logging in..." : "Log in"}
@@ -168,13 +165,12 @@ export default function AuthForm({ onLogin }) {
               required
               disabled={loading}
             />
-            <button
-              type="button"
-              className="show-pass-btn"
+            <span
+              className="password-icon"
               onClick={() => setShowPassword((p) => !p)}
             >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+              {showPassword ? <EyeSlashIcon className="eye-icon" /> : <EyeIcon className="eye-icon" />}
+            </span>
           </div>
           <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? "Signing up..." : "Sign Up"}
@@ -191,7 +187,7 @@ export default function AuthForm({ onLogin }) {
             required
             disabled={loading || timer === 0}
           />
-          <p>Expires in: {formatTime(timer)}</p>
+          <p>Expires in: {Math.floor(timer/60).toString().padStart(2,"0")}:{(timer%60).toString().padStart(2,"0")}</p>
           <button type="submit" disabled={loading || timer === 0}>
             {loading ? "Verifying..." : "Verify OTP"}
           </button>
