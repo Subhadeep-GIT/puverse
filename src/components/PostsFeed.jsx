@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/postsfeed.css";
 
-// ✅ Use your actual env variable name
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001/api";
+// ✅ Match the correct .env variable name
+const BASE_URL = import.meta.env.VITE_API_BACKEND_URL || "http://localhost:5001/api";
 
 export default function PostsFeed() {
   const [posts, setPosts] = useState([]);
@@ -16,15 +16,19 @@ export default function PostsFeed() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/posts`, { withCredentials: true });
+        const { data } = await axios.get(`${BASE_URL}/posts`, {
+          withCredentials: true,
+        });
+
         if (data.success) {
           setPosts(data.posts);
+          // Fetch comments for each post
           data.posts.forEach((post) => fetchComments(post.post_id));
         } else {
           setError("Failed to load posts");
         }
       } catch (err) {
-        console.error("Error fetching posts:", err);
+        console.error("❌ Error fetching posts:", err);
         setError("Error fetching posts");
       } finally {
         setLoading(false);
@@ -37,12 +41,14 @@ export default function PostsFeed() {
   // ---------- Fetch comments ----------
   const fetchComments = async (postId) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/comments/${postId}`, { withCredentials: true });
+      const { data } = await axios.get(`${BASE_URL}/comments/${postId}`, {
+        withCredentials: true,
+      });
       if (data.success) {
         setComments((prev) => ({ ...prev, [postId]: data.comments }));
       }
     } catch (err) {
-      console.error(`Error fetching comments for post ${postId}:`, err);
+      console.error(`❌ Error fetching comments for post ${postId}:`, err);
     }
   };
 
@@ -88,7 +94,7 @@ export default function PostsFeed() {
       }
     } catch (err) {
       removeTempComment(postId, tempComment.comment_id);
-      console.error("Error adding comment:", err);
+      console.error("❌ Error adding comment:", err);
     }
   };
 
@@ -142,7 +148,10 @@ export default function PostsFeed() {
                 ))}
               </div>
 
-              <form className="comment-form" onSubmit={(e) => handleCommentSubmit(post.post_id, e)}>
+              <form
+                className="comment-form"
+                onSubmit={(e) => handleCommentSubmit(post.post_id, e)}
+              >
                 <input
                   type="text"
                   placeholder="Add a comment..."
