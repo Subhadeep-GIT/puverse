@@ -5,6 +5,7 @@ import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 import { logout } from "./api/auth";
 import axios from "axios";
+import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
   const { user, setUser, loading } = useAuth();
@@ -33,10 +34,14 @@ export default function App() {
         setBackendAlive(false);
       }
     };
+
     checkBackend();
+    const interval = setInterval(checkBackend, 30000); // optional: recheck every 30s
+    return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  // Show loading screen while auth state is initializing
+  if (loading) return <LoadingScreen message="Initializing PUVerse..." />;
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
@@ -48,8 +53,12 @@ export default function App() {
         )}
       </div>
 
-      {/* Green flag for backend status */}
-      <div className={`p-2 mt-4 rounded text-white ${backendAlive ? "bg-green-500" : "bg-red-500"}`}>
+      {/* Backend status indicator */}
+      <div
+        className={`p-2 mt-4 rounded text-white transition-colors duration-300 ${
+          backendAlive ? "bg-green-500" : "bg-red-500"
+        }`}
+      >
         {backendAlive ? "Backend reachable ✅" : "Backend unreachable ❌"}
       </div>
     </div>
