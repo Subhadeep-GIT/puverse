@@ -1,7 +1,7 @@
 // src/components/ProfileTab.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "../styles/ProfileTab.css"; // dedicated CSS
+import axiosInstance from "../api/axiosInstance";
+import "../styles/ProfileTab.css";
 
 export default function ProfileTab({ user }) {
   const [posts, setPosts] = useState([]);
@@ -9,16 +9,19 @@ export default function ProfileTab({ user }) {
   const [deletingPostId, setDeletingPostId] = useState(null);
   const [profileImage, setProfileImage] = useState(user?.profile_pic || null);
 
-  const fetchUserPosts = () => {
+  const fetchUserPosts = async () => {
     if (!user?.id) return;
     setLoading(true);
-    axios
-      .get(`http://localhost:5001/api/posts/user/${user.id}`)
-      .then((res) => {
-        if (res.data.success) setPosts(res.data.posts);
-      })
-      .catch((err) => console.error("Failed to fetch user posts:", err))
-      .finally(() => setLoading(false));
+    try {
+      const res = await axiosInstance.get(`/posts/user/${user.id}`);
+      if (res.data.success) {
+        setPosts(res.data.posts);
+      }
+    } catch (err) {
+      console.error("Failed to fetch user posts:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -30,11 +33,9 @@ export default function ProfileTab({ user }) {
 
     try {
       setDeletingPostId(postId);
-      const res = await axios.delete(`http://localhost:5001/api/posts/${postId}`, {
-        withCredentials: true,
-      });
+      const res = await axiosInstance.delete(`/posts/${postId}`);
       if (res.data.success) {
-        setPosts(posts.filter((p) => p.post_id !== postId));
+        setPosts((prev) => prev.filter((p) => p.post_id !== postId));
       } else {
         alert(res.data.message || "Failed to delete post");
       }
@@ -54,10 +55,10 @@ export default function ProfileTab({ user }) {
     formData.append("profile_pic", file);
 
     try {
-      const res = await axios.post(
-        `http://localhost:5001/api/user/${user.id}/profile-pic`,
+      const res = await axiosInstance.post(
+        `/user/${user.id}/profile-pic`,
         formData,
-        { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
       if (res.data.success) {
         setProfileImage(res.data.profile_pic);
@@ -68,17 +69,18 @@ export default function ProfileTab({ user }) {
     }
   };
 
-  const getInitials = (name) => {
-    if (!name) return "?";
-    return name.charAt(0).toUpperCase();
-  };
+  const getInitials = (name) => (name ? name.charAt(0).toUpperCase() : "?");
 
   return (
     <div className="profile-tab">
       <div className="profile-header">
         <div className="profile-pic-wrapper">
           {profileImage ? (
-            <img src={`http://localhost:5001${profileImage}`} alt="Profile" className="profile-pic" />
+            <img
+              src={`${import.meta.env.VITE_BACKEND_URL.replace("/api", "")}${profileImage}`}
+              alt="Profile"
+              className="profile-pic"
+            />
           ) : (
             <div className="profile-pic placeholder">{getInitials(user?.username)}</div>
           )}
@@ -104,7 +106,7 @@ export default function ProfileTab({ user }) {
             <div key={post.post_id} className="post-card">
               {post.image_path && (
                 <img
-                  src={`http://localhost:5001${post.image_path}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL.replace("/api", "")}${post.image_path}`}
                   alt="Post"
                   className="post-image"
                 />

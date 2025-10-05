@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { createPost } from "../api/posts";
 import "../styles/createpost.css";
 
 export default function CreatePost({ user }) {
@@ -36,19 +36,21 @@ export default function CreatePost({ user }) {
     formData.append("userId", user?.id);
 
     try {
-      const res = await axios.post("http://localhost:5001/api/posts", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
-      });
+      const res = await createPost(formData);
 
-      setMessage(res.data.message || "Post uploaded!");
-      setAllowCopy(true);
-      setCaption("");
-      setImage(null);
-      setPreview(null);
+      if (res.success) {
+        setMessage("Post uploaded successfully!");
+        setAllowCopy(true);
+        setCaption("");
+        setImage(null);
+        setPreview(null);
+        setFilter("none");
+      } else {
+        setMessage(res.message || "Failed to upload post");
+      }
     } catch (err) {
       console.error(err);
-      setMessage("Failed to upload post");
+      setMessage("An error occurred");
     } finally {
       setLoading(false);
     }
