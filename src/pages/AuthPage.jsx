@@ -5,8 +5,10 @@ import "../styles/AuthForm.css";
 export default function AuthPage({ onLogin }) {
   return (
     <div className="auth-page">
-      {/* Mobile top image */}
-      <div className="mobile-top-image"></div>
+      {/* Background image with blurred bottom overlay */}
+      <div className="mobile-top-image">
+        <div className="image-overlay"></div>
+      </div>
 
       {/* Form container */}
       <div className="form-wrapper">
