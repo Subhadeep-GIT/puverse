@@ -1,12 +1,24 @@
-// src/pages/AuthPage.jsx
+import React from "react";
 import AuthForm from "../components/AuthForm";
+import "../styles/AuthForm.css";
 
 export default function AuthPage({ onLogin }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6">PUVerse</h1>
+    <div className="auth-page">
+      {/* Desktop/Laptop background */}
+      <div className="bg-image"></div>
+
+      {/* Form container */}
+      <div className="form-wrapper">
+        <h1 className="form-title">PUVerse</h1>
         <AuthForm onLogin={onLogin} />
+
+        {/* Mobile secondary links */}
+        <div className="secondary-links">
+          <a href="#">Forgotten password?</a>
+          <a href="#">Create new account</a>
+          <span>About • Help • More</span>
+        </div>
       </div>
     </div>
   );
