@@ -26,7 +26,7 @@ export default function App() {
     const checkBackend = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api"}/health`,
+          `${import.meta.env.VITE_API_BACKEND_URL || "http://localhost:5001/api"}/health`,
           { headers: { "ngrok-skip-browser-warning": "true" } }
         );
         if (res.data.status === "ok") setBackendAlive(true);

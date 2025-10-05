@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
+const BASE_URL = import.meta.env.VITE_API_BACKEND_URL || "http://localhost:5001/api";
 
 // Create a post (with image)
 export const createPost = async (formData) => {
